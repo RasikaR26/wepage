@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Neocities - Dashboard</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<link rel="canonical" href="https://neocities.org/dashboard?dir=coffee-webpage%2Fstyle.html">
+
+<meta property="og:title"       content="Neocities">
+<meta property="og:type"        content="website">
+<meta property="og:image"       content="https://neocities.org/img/neocities-front-screenshot.jpg">
+
+<link rel="icon" type="image/x-icon" href="/img/favicon.png">
+
+<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1">
+
+
+
+    <script>
+  (function() {
+    var themeKey = 'neocities-theme';
+    var storedTheme;
+
+    try {
+      storedTheme = localStorage.getItem(themeKey);
+    } catch (e) {}
+
+    if (storedTheme === 'dark') {
+      document.documentElement.className += ' dark-Mode';
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      if (storedTheme !== 'light') {
+        try {
+          localStorage.setItem(themeKey, 'light');
+        } catch (e) {}
+      }
+
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+  })();
+</script>
+
+
+    <link href="/css/neo.css" rel="stylesheet" type="text/css" media="all">
+
+      <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+      <meta http-equiv="Pragma" content="no-cache">
+      <meta http-equiv="Expires" content="0">
+
+    <script src="/js/jquery-1.11.0.min.js"></script>
+
+    <script src="/js/highlight/highlight.min.js"></script>
+    <link rel="stylesheet" href="/css/highlight/styles/tomorrow-night.css">
+    <script>
+      hljs.highlightAll()
+
+      document.addEventListener('DOMContentLoaded', function() {
+        var eventDateElements = document.querySelectorAll('.local-date-title');
+        eventDateElements.forEach(function(element) {
+          var timestamp = element.getAttribute('data-timestamp');
+          var date = dayjs.unix(timestamp);
+          var formattedDate = date.format('MMMM D, YYYY [at] h:mm A');
+          element.title = formattedDate;
+        });
+      });
+    </script>
+  </head>
+
+  <body class="interior">
+    <div class="page">
+      
+<header class="header-Base">
+
+  <nav class="header-Nav clearfix" role="navigation">
+
+    <a href="#!" title="show small screen nav" class="small-Nav">
+      <img src="/img/nav-Icon.png" alt="navigation icon" />
+    </a>
+
+    <ul class="h-Nav constant-Nav">
+          <li>
+      <a href="/browse" id="browse-link">Websites</a>
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const browseLink = document.getElementById('browse-link');
+
+          if (window.location.pathname === '/browse') {
+            const params = new URLSearchParams(window.location.search);
+            const persistParams = new URLSearchParams();
+            const validPattern = /^[a-zA-Z0-9 ]+$/;
+
+            ['sort_by', 'tag'].forEach(key => {
+              if (params.has(key)) {
+                const value = params.get(key);
+                if (value.length <= 25 && validPattern.test(value)) {
+                  persistParams.set(key, value);
+                }
+              }
+            });
+
+            localStorage.setItem('browseQuery', persistParams.toString());
+          }
+
+          const savedQuery = localStorage.getItem('browseQuery');
+
+          if (savedQuery) {
+            browseLink.href = `/browse?${savedQuery}`;
+          }
+        });
+      </script>
+    </li>
+    <li>
+      <a href="/search">Search</a>
+    </li>
+    <li>
+      <a href="/activity">Activity</a>
+    </li>
+    <li>
+      <a href="/tutorials">Learn</a>
+    </li>
+
+      <li>
+        <a href="/supporter">Upgrade to Supporter<i class="fa fa-heart"><i class="fa fa-heart"></i></i></a>
+      </li>
+
+    </ul>
+
+    <ul class="status-Nav">
+        <li class="dropdown">
+          <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+            rasika26
+            <span class="info">
+              <i class="fa fa-caret-down"></i>
+            </span>
+          </a>
+          <ul class="dropdown-menu">
+                <li><a href="/site/rasika26">Profile</a></li>
+                <li>
+                  <a href="/?activity=mine"><span class="float-Left">Activity</span>
+                  </a>
+                </li>
+                <li class="divider"></li>
+                <li><a href="/dashboard">Edit</a></li>
+              <li><a href="https://rasika26.neocities.org" target="_blank">View</a></li>
+              <li><a href="/site/rasika26/stats">Stats</a></li>
+              <li class="divider"></li>
+            <li><a href="/settings">Settings</a></li>
+
+
+
+            <li><a href="#" onclick="$('#signoutForm').submit()">Sign Out</a></li>
+            <form id="signoutForm" method="POST" action="/signout" style="display: none">
+              <input name="csrf_token" type="hidden" value="sD24gYfdD5OWW47NrQ3uo1la9bwHt8Mw2lZHQLvbhyA=">
+            </form>
+          </ul>
+        </li>
+
+      <li class="theme-NavItem theme-NavItem--iconOnly">
+  <button type="button" class="theme-Toggle theme-Toggle--iconOnly" data-theme-toggle aria-pressed="false" aria-label="Switch to dark mode" title="Switch to dark mode">
+    <i class="fa fa-moon-o" aria-hidden="true"></i>
+  </button>
+</li>
+
+      </ul>
+  </nav>
+
+  <div class="logo int-Logo">
+    <a href="/" title="back to home">
+      <span class="hidden">Neocities.org</span>
+      <img src="/img/cat.png" alt="Neocities.org" />
+    </a>
+  </div>
+</header>
+
+
+      
+      <script src="/js/dropzone-min.js"></script>
+<style>
+  .dz-default {
+    display: none;
+  }
+  .dz-preview {
+    display: none;
+  }
+  .dz-processing {
+    display: none;
+  }
+  .dz-error {
+    display: none;
+  }
+  .dz-image-preview {
+    display: none;
+  }
+</style>
+<div class="header-Outro with-site-image dashboard">
+  <div class="row content wide">
+    <div class="col col-50 signup-Area">
+      <div class="signup-Form">
+  	  <fieldset class="content">
+        <a href="https://rasika26.neocities.org" class="screenshot dashboard" style="background-image:url(/site_screenshots/95/59/rasika26/index.html.540x405.webp);"></a>
+	    </fieldset>
+      </div>
+    </div>
+
+	<div class="col col-50">
+    <h2 class="eps">The web site of rasika26</h2>
+    <p class="site-url">
+      <a href="https://rasika26.neocities.org" target="_blank">rasika26.neocities.org</a>
+      <a href="#" id="shareButton" class="btn-Action" data-container="body" data-toggle="popover" data-placement="bottom" data-content='<a href="/site/rasika26.rss" target="_blank"><span>RSS Feed</span></a>
+<br>
+<a href="https://facebook.com/sharer.php?u=https%3A%2F%2Frasika26.neocities.org" target="_blank">Facebook</a>
+<br>
+<a href="https://bsky.app/intent/compose?text=The+web+site+of+rasika26%3A+https%3A%2F%2Frasika26.neocities.org" target="_blank">Bluesky</a>
+<br>
+<a href="https://twitter.com/intent/tweet?text=The+web+site+of+rasika26%3A+https%3A%2F%2Frasika26.neocities.org" target="_blank">Twitter</a>
+<br>
+<a href="https://www.reddit.com/submit?title=The+web+site+of+rasika26&amp;url=https%3A%2F%2Frasika26.neocities.org" target="_blank">Reddit</a>
+<br>
+<a href="https://www.tumblr.com/share?v=3&amp;u=https%3A%2F%2Frasika26.neocities.org&amp;t=The+web+site+of+rasika26" target="_blank">Tumblr</a>
+<br>
+<a href="https://toot.kytta.dev/?text=The+web+site+of+rasika26%3A+https%3A%2F%2Frasika26.neocities.org" target="_blank">Mastodon</a>
+'><i class="fa fa-share-alt"></i> <span>Share</span></a>
+    </p>
+	<ul>
+      <li>Last updated <strong class="local-date-title" data-timestamp="1785175807">2 minutes ago</strong></li>
+    <li>Using <strong>0.1% (508.13 KB)</strong> of your <strong>1 GB</strong> storage.
+    <br>
+    <li>
+      Used 0 B of bandwidth this month.
+      <br>
+      Need more space? <a href="/supporter">Become a Supporter!</a>
+    </li>
+	</ul>
+	</div>
+
+  </div> <!-- end .row -->
+</div> <!-- end .header-Outro -->
+
+<main class="content-Base" role="main">
+
+<div class="content wide">
+
+
+<div id="alertDialogue" class="alert alert-block alert-success" style="display: none; max-height: 200px; overflow-y: auto;"></div>
+
+<div id="filesDisplay" class="files">
+  <div id="uploadingOverlay" class="uploading-overlay" style="display: none">
+  <div class="uploading">
+      <p>Uploading, please wait...</p>
+      <p id="uploadFileName"></p>
+    <!-- <div id="progressBar" class="progress-bar" style="display: none"><div id="uploadingProgress" class="progress" style="width: 0%"></div></div> -->
+  </div>
+</div>
+<div id="movingOverlay" class="uploading-overlay" style="display: none">
+  <div class="uploading">
+      <p>Moving file, please wait...</p>
+  </div>
+</div>
+<div class="header">
+  <div class="btn-group" role="group" aria-label="...">
+    <button type="button" class="btn btn-default iconview-button" title="Icon View" onclick="iconView()"><i class="fa fa-th"></i></button>
+    <button type="button" class="btn btn-default listview-button" title="List View" onclick="listView()"><i class="fa fa-list"></i></button>
+  </div>
+  <div class="breadcrumbs">
+      <a href="/dashboard">Home</a>
+
+          <a href="/dashboard?dir="></a> <i class="fa fa-angle-right"></i>
+          <a href="/dashboard?dir=coffee-webpage">coffee-webpage</a> <i class="fa fa-angle-right"></i>
+          style.html
+  </div>
+  <div class="actions">
+    <button type="button" id="selectFilesButton" class="btn-Action select-files-button" onclick="toggleBulkSelect(event)"><i class="fa fa-check-square-o"></i> Select</button>
+    <a href="#createFile" class="btn-Action" data-toggle="modal"><i class="fa fa-file"></i> New File</a>
+    <a href="#createDir" class="btn-Action" data-toggle="modal"><i class="fa fa-folder"></i> New Folder</a>
+    <a href="#" id="uploadButton" class="btn-Action"><i class="fa fa-arrow-circle-up"></i> Upload</a>
+  </div>
+  <div id="bulkActions" class="bulk-actions">
+    <label class="bulk-select-all">
+      <input type="checkbox" id="bulkSelectAll" onchange="toggleSelectAllFiles(this.checked)">
+      <span>Select all</span>
+    </label>
+    <strong><span id="selectedFileCount">0</span> selected</strong>
+    <button type="button" class="btn bulk-clear" onclick="clearFileSelection()">Clear</button>
+    <button type="button" class="btn-Action btn-danger bulk-delete" id="bulkDeleteButton" onclick="confirmBulkDelete()" disabled><i class="fa fa-trash"></i> Delete selected</button>
+  </div>
+</div>
+<div class="list">
+  <form action="/site_files/upload" class="dropzone" id="uploads">
+    <div class="dz-message" style="display: none"></div>
+    <input name="csrf_token" type="hidden" value="sD24gYfdD5OWW47NrQ3uo1la9bwHt8Mw2lZHQLvbhyA=">
+    <input name="dir" type="hidden" value="/coffee-webpage/style.html" id="dir">
+    <div class="upload-Boundary with-instruction">
+        <div class="file filehover">
+            <div class="html-thumbnail misc fileimagehover">
+              <div class="misc-icon">css</div>
+              <div class="overlay"></div>
+            </div>
+
+            <label class="bulk-select-control" title="Select coffee-webpage/style.html/style.css">
+              <input type="checkbox" class="bulk-select-checkbox" value="coffee-webpage/style.html/style.css" aria-label="Select coffee-webpage/style.html/style.css">
+              <span class="bulk-select-box"><i class="fa fa-check"></i></span>
+            </label>
+
+          <a class="title">
+            style.css
+          </a>
+          <div class="column size">
+              3.02 KB
+          </div>
+          <div class="column updated">
+              2 minutes ago
+          </div>
+
+          <div class="overlay">
+            <div id="173b6404349200db9b8eab500c2c050fa4e2b8583103f4002ded035b8ce9fdca" style="display: none">coffee-webpage/style.html/style.css</div>
+              <a href="/site_files/text_editor?filename=coffee-webpage%2Fstyle.html%2Fstyle.css"><i class="fa fa-edit" title="Edit"></i> Edit</a>
+              <a href="#" onclick="confirmFileRename($('#173b6404349200db9b8eab500c2c050fa4e2b8583103f4002ded035b8ce9fdca').text())"><i class="fa fa-file" title="Rename"></i> Rename</a>
+              <a href="#" onclick="confirmFileDelete($('#173b6404349200db9b8eab500c2c050fa4e2b8583103f4002ded035b8ce9fdca').text())"><i class="fa fa-trash" title="Delete"></i> Delete</a>
+            <a class="link-overlay" href="https://rasika26.neocities.org/coffee-webpage/style.html/style.css" title="View coffee-webpage/style.html/style.css" target="_blank"></a>
+          </div>
+        </div>
+    </div>
+  </form>
+</div>
+
+</div>
+
+      <input id="deleteCSRFToken" type="hidden" value="sD24gYfdD5OWW47NrQ3uo1la9bwHt8Mw2lZHQLvbhyA=">
+
+      <div class="modal hide" id="deleteConfirmModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
+        <div class="modal-header">
+          <button class="close" id="deleteConfirmCloseButton" type="button" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+          <h3 id="deleteConfirmModalLabel">Confirm deletion</h3>
+        </div>
+        <div class="modal-body">
+          <p id="deleteSingleMessage">You are about to delete <strong><span id="deleteFileName"></span></strong>. Are you sure?</p>
+          <p id="deleteMultipleMessage" style="display: none">You are about to delete <strong><span id="deleteFileCount">0</span> items</strong>. Are you sure?</p>
+          <ul id="deleteFileList" class="delete-file-list"></ul>
+          <p id="deleteProgressMessage" class="delete-progress-message" style="display: none"><i class="fa fa-spinner fa-spin"></i><span id="deleteProgressText">Deleting selected files...</span></p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn cancel" id="deleteCancelButton" data-dismiss="modal" aria-hidden="true" type="button">Cancel</button>
+          <button class="btn-Action btn-danger" id="deleteConfirmButton" type="button" onclick="fileDelete()"><i class="fa fa-trash" title="Delete"></i>Delete</button>
+        </div>
+      </div>
+
+      <div class="modal hide" id="renameModal" tabindex="-1" role="dialog" aria-labelledby="renameModalLabel" aria-hidden="true">
+        <form method="post" action="/site_files/rename">
+          <input type="hidden" value="sD24gYfdD5OWW47NrQ3uo1la9bwHt8Mw2lZHQLvbhyA=" name="csrf_token">
+          <input type="hidden" value="/coffee-webpage/style.html" name="dir">
+          <input type="hidden" id="renamePathInput" name="path">
+
+          <div class="modal-header">
+            <button class="close" type="button" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+            <h3 id="renameModalLabel">Rename / Move</h3>
+          </div>
+          <div class="modal-body">
+            <input id="renameNewPathInput" name="new_path" type="text" style="width: 100%">
+            <p>Note: We will automatically scrub any characters not matching: a-z A-Z 0-9 _ - .</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn cancel" data-dismiss="modal" aria-hidden="true">Cancel</button>
+            <button type="submit" class="btn-Action">Rename</button>
+          </div>
+        </form>
+      </div>
+
+
+<div class="site-actions" style="margin-bottom:25px">
+    <a href="/site_files/allowed_types">Allowed file types</a> |
+    <a href="/site_files/download">Download entire site</a> |
+    <a href="/site_files/mount_info">Mount your site as a drive on your computer</a>
+</div>
+
+</div>
+</main>
+
+<form id="uploadFilesButtonForm" method="POST" action="/api/upload" enctype="multipart/form-data" style="display: none" onsubmit="event.preventDefault(); showUploadProgress(); uploadFileFromButton();">
+  <input name="csrf_token" type="hidden" value="sD24gYfdD5OWW47NrQ3uo1la9bwHt8Mw2lZHQLvbhyA=">
+  <input name="from_button" type="hidden" value="true">
+  <input name="dir" type="hidden" id="dir" value="/coffee-webpage/style.html">
+  <input id="uploadFiles" type="file" name="file" multiple>
+</form>
+
+<div class="modal hide" id="createDir" tabindex="-1" role="dialog" aria-labelledby="createDirLabel" aria-hidden="true">
+  <form method="post" action="/api/create_directory">
+    <input type="hidden" value="sD24gYfdD5OWW47NrQ3uo1la9bwHt8Mw2lZHQLvbhyA=" name="csrf_token">
+    <input type="hidden" value="true" name="from_dashboard">
+    <input type="hidden" value="/coffee-webpage/style.html" name="dir">
+    <div class="modal-header">
+      <button class="close" type="button" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+      <h3 id="createDirLabel">Create Folder</h3>
+    </div>
+    <div class="modal-body">
+      <input id="newDirInput" name="name" type="text" placeholder="folder_name">
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn cancel" data-dismiss="modal" aria-hidden="true">Cancel</button>
+      <button type="submit" class="btn-Action">Create</button>
+    </div>
+  </form>
+</div>
+
+<div class="modal hide" id="createFile" tabindex="-1" role="dialog" aria-labelledby="createFileLabel" aria-hidden="true">
+  <form id="createFileForm" onsubmit="return false;">
+    <input type="hidden" value="sD24gYfdD5OWW47NrQ3uo1la9bwHt8Mw2lZHQLvbhyA=" name="csrf_token" id="createFileCSRFToken">
+    <input type="hidden" value="/coffee-webpage/style.html" name="dir" id="createFileDir">
+    <div class="modal-header">
+      <button class="close" type="button" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+      <h3 id="createFileLabel">Create New File</h3>
+    </div>
+    <div class="modal-body">
+      <div id="createFileError" class="alert alert-error" style="display: none; margin-bottom: 15px;"></div>
+      <input id="newFileInput" name="filename" type="text" placeholder="newfile.html">
+      <p>Note: We will automatically scrub any characters not matching: a-z A-Z 0-9 _ - .</p>
+      <p>Allowed file types: html, htm, txt, js, css, md, json, xml, py, and others. Must be an editable file type.</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn cancel" data-dismiss="modal" aria-hidden="true">Cancel</button>
+      <button type="button" class="btn-Action" id="createFileSubmitButton" onclick="handleCreateFile()">Create</button>
+    </div>
+  </form>
+</div>
+
+<script src="/js/dashboard.js"></script>
+
+    </div>
+    <footer class="footer-Base">
+      <aside class="footer-Outro">
+  <div class="footer-Content">
+    <div class="row">
+      <p class="tiny col credits">
+        <a href="https://neocities.org" title="Neocities.org" style="text-decoration:none;">Neocities</a> is <a href="https://github.com/neocities" title="Neocities on GitHub">open source</a>. Follow us on <a href="https://bsky.app/profile/neocities.org">Bluesky</a>
+      </p>
+      <nav class="footer-Nav col">
+        <ul class="tiny h-Nav">
+          <li><a href="/about">About</a></li>
+          <li><a href="/donate">Donate</a></li>
+          <li><a href="/cli">CLI</a></li>
+            <li><a href="//blog.neocities.org">Blog</a></li>
+            <li><a href="/api">API</a></li>
+            <li><a href="/press">Press</a></li>
+          <li><a href="http://status.neocitiesops.net/">Status</a></li>
+          <li><a href="/terms" rel="nofollow">Terms</a></li>
+          <li><a href="/contact" rel="nofollow">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</aside>
+
+    </footer>
+
+    <script src="/js/underscore-min.js"></script>
+    <script src="/js/nav.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/typeahead.bundle.js"></script>
+    <script src="/js/dayjs.min.js"></script>
+    <script src="/js/theme.js"></script>
+
+    <script>
+      $("a#like").tooltip({html: true})
+      $("a.comment_like").tooltip({html: true})
+      $('#shareButton').popover({html: true})
+      $('#tipButton').popover({html: true})
+
+      $('.typeahead').typeahead({
+        minLength: 2,
+        highlight: true
+      }, {
+        name: 'tags',
+        source: function(query, callback) {
+          $.get('/tags/autocomplete/'+query+'.json', function(data) {
+            var suggestions = JSON.parse(data)
+            var suggestionObjects = []
+            for(var i=0; i<suggestions.length; i++)
+              suggestionObjects.push({value: suggestions[i]})
+
+            callback(suggestionObjects)
+          })
+        }
+      }).on('typeahead:selected', function(e) {
+        e.target.form.submit()
+      })
+    </script>
+  </body>
+</html>
